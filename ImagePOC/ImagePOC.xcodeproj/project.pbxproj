@@ -38,6 +38,7 @@
 		554CFDC31D3C200400A6C944 /* NSDictionary_JSONExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CFDB01D3C200400A6C944 /* NSDictionary_JSONExtensions.m */; settings = {ASSET_TAGS = (); }; };
 		554CFDC71D3C205D00A6C944 /* RequestResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CFDC61D3C205D00A6C944 /* RequestResponseParser.m */; settings = {ASSET_TAGS = (); }; };
 		5595C70F1D3C222C00BD4FFF /* Loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 5595C70E1D3C222C00BD4FFF /* Loading.png */; settings = {ASSET_TAGS = (); }; };
+		5595C7111D3C22B800BD4FFF /* ReadMe.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5595C7101D3C22B800BD4FFF /* ReadMe.rtf */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +102,7 @@
 		554CFDC51D3C205D00A6C944 /* RequestResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestResponseParser.h; sourceTree = "<group>"; };
 		554CFDC61D3C205D00A6C944 /* RequestResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestResponseParser.m; sourceTree = "<group>"; };
 		5595C70E1D3C222C00BD4FFF /* Loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Loading.png; sourceTree = "<group>"; };
+		5595C7101D3C22B800BD4FFF /* ReadMe.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = ReadMe.rtf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				554CFD621D3C1DE600A6C944 /* LaunchScreen.storyboard */,
 				554CFD651D3C1DE600A6C944 /* Info.plist */,
 				554CFD5D1D3C1DE600A6C944 /* ImagePOC.xcdatamodeld */,
+				5595C7101D3C22B800BD4FFF /* ReadMe.rtf */,
 				554CFD511D3C1DE600A6C944 /* Supporting Files */,
 			);
 			path = ImagePOC;
@@ -329,6 +332,7 @@
 				5595C70F1D3C222C00BD4FFF /* Loading.png in Resources */,
 				554CFD641D3C1DE600A6C944 /* LaunchScreen.storyboard in Resources */,
 				554CFD611D3C1DE600A6C944 /* Assets.xcassets in Resources */,
+				5595C7111D3C22B800BD4FFF /* ReadMe.rtf in Resources */,
 				554CFD5C1D3C1DE600A6C944 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
