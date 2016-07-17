@@ -37,6 +37,7 @@
 		554CFDC21D3C200400A6C944 /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CFDAD1D3C200400A6C944 /* CJSONSerializer.m */; settings = {ASSET_TAGS = (); }; };
 		554CFDC31D3C200400A6C944 /* NSDictionary_JSONExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CFDB01D3C200400A6C944 /* NSDictionary_JSONExtensions.m */; settings = {ASSET_TAGS = (); }; };
 		554CFDC71D3C205D00A6C944 /* RequestResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CFDC61D3C205D00A6C944 /* RequestResponseParser.m */; settings = {ASSET_TAGS = (); }; };
+		5595C70F1D3C222C00BD4FFF /* Loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 5595C70E1D3C222C00BD4FFF /* Loading.png */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +100,7 @@
 		554CFDB01D3C200400A6C944 /* NSDictionary_JSONExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionary_JSONExtensions.m; sourceTree = "<group>"; };
 		554CFDC51D3C205D00A6C944 /* RequestResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestResponseParser.h; sourceTree = "<group>"; };
 		554CFDC61D3C205D00A6C944 /* RequestResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestResponseParser.m; sourceTree = "<group>"; };
+		5595C70E1D3C222C00BD4FFF /* Loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Loading.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 				554CFD821D3C1F6E00A6C944 /* CoreServies */,
 				554CFD751D3C1EF800A6C944 /* ModelClasses */,
 				554CFD6B1D3C1E2E00A6C944 /* DetailViewController */,
+				5595C70D1D3C222C00BD4FFF /* Images */,
 				554CFD541D3C1DE600A6C944 /* AppDelegate.h */,
 				554CFD551D3C1DE600A6C944 /* AppDelegate.m */,
 				554CFD5A1D3C1DE600A6C944 /* Main.storyboard */,
@@ -258,6 +261,14 @@
 			path = RequestResponseParser;
 			sourceTree = "<group>";
 		};
+		5595C70D1D3C222C00BD4FFF /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				5595C70E1D3C222C00BD4FFF /* Loading.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -315,6 +326,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5595C70F1D3C222C00BD4FFF /* Loading.png in Resources */,
 				554CFD641D3C1DE600A6C944 /* LaunchScreen.storyboard in Resources */,
 				554CFD611D3C1DE600A6C944 /* Assets.xcassets in Resources */,
 				554CFD5C1D3C1DE600A6C944 /* Main.storyboard in Resources */,
@@ -501,6 +513,7 @@
 				554CFD6A1D3C1DE600A6C944 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

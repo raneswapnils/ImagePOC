@@ -7,21 +7,164 @@
 //
 
 #import "ViewController.h"
+#import "RequestResponseParser.h"
+#import <CoreData/CoreData.h>
+#import "CoreDataManager.h"
+#import "DetailsInfo.h"
+#import "UIImageView+WebCache.h"
 
-@interface ViewController ()
+#define CELL_CONTENT_WIDTH 320.0f
+#define CELL_CONTENT_MARGIN 10.0f
+
+@interface ViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
+
+@property (nonatomic, strong) UITableView *detailsTableView;
+
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
 @implementation ViewController
 
+#pragma mark - Lifecycle Methods
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    RequestResponseParser *requestResponseParser = [[RequestResponseParser alloc]init];
+    
+    [requestResponseParser callApiRequest:^(BOOL status, NSError *error) {
+        
+        if(status) {
+            [self fetchResult];
+            [self initializeTableView];
+            [self initializeNavigationBar];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+}
+
+#pragma mark - Private Methods
+
+/*! This method will initialize tableview */
+
+-(void)initializeTableView {
+    
+    self.detailsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, self.view.bounds.size.width, self.view.bounds.size.height - 44) style:UITableViewStylePlain];
+    self.detailsTableView.dataSource = self;
+    self.detailsTableView.delegate = self;
+    self.detailsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.detailsTableView.separatorInset = UIEdgeInsetsZero;
+    self.detailsTableView.layoutMargins = UIEdgeInsetsZero;
+    [self.view addSubview:self.detailsTableView];
+}
+
+-(void)initializeNavigationBar {
+    
+    UINavigationBar *navigationBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
+    [self.view addSubview:navigationBar];
+    NSString *title = [[NSUserDefaults standardUserDefaults]stringForKey:@"title"];
+    UINavigationItem *navigationItem = [[UINavigationItem alloc]initWithTitle:title];
+    navigationBar.items = @[navigationItem];
+}
+
+/*! This method will fetch cached data */
+
+-(void)fetchResult {
+    
+    // Initialize Fetch Request
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DetailsInfo"];
+    
+    // Add Sort Descriptors
+    [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]]];
+    
+    // Initialize Fetched Results Controller
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[[CoreDataManager sharedInstance] managedObjectContext] sectionNameKeyPath:nil cacheName:nil];
+    
+    // Configure Fetched Results Controller
+    [self.fetchedResultsController setDelegate:self];
+    
+    // Perform Fetch
+    NSError *error = nil;
+    [self.fetchedResultsController performFetch:&error];
+    
+    if (error) {
+        NSLog(@"Unable to perform fetch.");
+        NSLog(@"%@, %@", error, error.localizedDescription);
+    }
+}
+
+#pragma mark - UITableViewDataSource Methods
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    NSArray *sections = [self.fetchedResultsController sections];
+    
+    id<NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:section];
+    
+    return [sectionInfo numberOfObjects];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *myCellIdentifier = @"MyCellIdentifier";
+    
+    UITableViewCell *cell = [self.detailsTableView dequeueReusableCellWithIdentifier:myCellIdentifier];
+    
+    if(cell == nil) {
+        
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:myCellIdentifier];
+    }
+    cell.layoutMargins = UIEdgeInsetsZero;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    DetailsInfo *detailsInfoObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.font=[UIFont fontWithName:@"Arial" size:12];
+    cell.detailTextLabel.font=[UIFont fontWithName:@"Arial" size:10];
+    cell.detailTextLabel.numberOfLines = 0;
+    cell.textLabel.text = detailsInfoObject.title;
+    cell.detailTextLabel.text = detailsInfoObject.detailDescription;
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:detailsInfoObject.imageRef]
+                      placeholderImage:[UIImage imageNamed:@"Loading.png"]];
+    return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return UITableViewAutomaticDimension;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    DetailsInfo *detailsInfoObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    NSString *detailText = detailsInfoObject.detailDescription;
+    
+    UITableViewCell *cell = [self.detailsTableView cellForRowAtIndexPath:indexPath];
+    
+    if([detailText length]) {
+        
+        CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2) - cell.imageView.image.size.width, 20000.0f);
+        
+        NSAttributedString *attributedText =
+        [[NSAttributedString alloc] initWithString:detailText
+                                        attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:10]}];
+        CGRect rect = [attributedText boundingRectWithSize:constraint
+                                                   options:NSStringDrawingUsesLineFragmentOrigin
+                                                   context:nil];
+        CGSize size = rect.size;
+        
+        CGFloat height = MAX(size.height + cell.imageView.image.size.height, 40.0f);
+        
+        return height + (CELL_CONTENT_MARGIN * 2);
+    }
+    else {
+        
+        return MAX(cell.imageView.image.size.height, 40.0f);
+    }
 }
 
 @end
