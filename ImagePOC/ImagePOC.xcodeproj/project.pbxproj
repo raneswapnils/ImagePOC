@@ -36,6 +36,7 @@
 		554CFDC11D3C200400A6C944 /* CJSONDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CFDAB1D3C200400A6C944 /* CJSONDeserializer.m */; settings = {ASSET_TAGS = (); }; };
 		554CFDC21D3C200400A6C944 /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CFDAD1D3C200400A6C944 /* CJSONSerializer.m */; settings = {ASSET_TAGS = (); }; };
 		554CFDC31D3C200400A6C944 /* NSDictionary_JSONExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CFDB01D3C200400A6C944 /* NSDictionary_JSONExtensions.m */; settings = {ASSET_TAGS = (); }; };
+		554CFDC71D3C205D00A6C944 /* RequestResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CFDC61D3C205D00A6C944 /* RequestResponseParser.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +97,8 @@
 		554CFDAE1D3C200400A6C944 /* JSONRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONRepresentation.h; sourceTree = "<group>"; };
 		554CFDAF1D3C200400A6C944 /* NSDictionary_JSONExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDictionary_JSONExtensions.h; sourceTree = "<group>"; };
 		554CFDB01D3C200400A6C944 /* NSDictionary_JSONExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionary_JSONExtensions.m; sourceTree = "<group>"; };
+		554CFDC51D3C205D00A6C944 /* RequestResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestResponseParser.h; sourceTree = "<group>"; };
+		554CFDC61D3C205D00A6C944 /* RequestResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestResponseParser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +180,7 @@
 		554CFD821D3C1F6E00A6C944 /* CoreServies */ = {
 			isa = PBXGroup;
 			children = (
+				554CFDC41D3C205D00A6C944 /* RequestResponseParser */,
 				554CFD831D3C1F6E00A6C944 /* CoreDataManager */,
 			);
 			path = CoreServies;
@@ -243,6 +247,15 @@
 				554CFDB01D3C200400A6C944 /* NSDictionary_JSONExtensions.m */,
 			);
 			path = TouchJSON;
+			sourceTree = "<group>";
+		};
+		554CFDC41D3C205D00A6C944 /* RequestResponseParser */ = {
+			isa = PBXGroup;
+			children = (
+				554CFDC51D3C205D00A6C944 /* RequestResponseParser.h */,
+				554CFDC61D3C205D00A6C944 /* RequestResponseParser.m */,
+			);
+			path = RequestResponseParser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -318,6 +331,7 @@
 				554CFDC31D3C200400A6C944 /* NSDictionary_JSONExtensions.m in Sources */,
 				554CFDBF1D3C200400A6C944 /* UIImageView+WebCache.m in Sources */,
 				554CFDBB1D3C200400A6C944 /* UIImage+GIF.m in Sources */,
+				554CFDC71D3C205D00A6C944 /* RequestResponseParser.m in Sources */,
 				554CFDB41D3C200400A6C944 /* SDWebImageCompat.m in Sources */,
 				554CFDBA1D3C200400A6C944 /* UIButton+WebCache.m in Sources */,
 				554CFDBC1D3C200400A6C944 /* UIImage+MultiFormat.m in Sources */,
