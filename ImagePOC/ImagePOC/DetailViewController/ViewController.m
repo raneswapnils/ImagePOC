@@ -13,8 +13,7 @@
 #import "DetailsInfo.h"
 #import "UIImageView+WebCache.h"
 
-#define CELL_CONTENT_WIDTH 320.0f
-#define CELL_CONTENT_MARGIN 10.0f
+#define CELL_CONTENT_MARGIN 20.0f
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
@@ -152,9 +151,11 @@
     cell.textLabel.text = detailsInfoObject.title;
     cell.detailTextLabel.text = detailsInfoObject.detailDescription;
     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:detailsInfoObject.imageRef]
-                      placeholderImage:[UIImage imageNamed:@"Loading.png"]];
+                      placeholderImage:[UIImage imageNamed:@"noImage"]];
     return cell;
 }
+
+#pragma mark - UITableViewDelegate Methods
 
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -167,11 +168,9 @@
     
     NSString *detailText = detailsInfoObject.detailDescription;
     
-    UITableViewCell *cell = [self.detailsTableView cellForRowAtIndexPath:indexPath];
-    
     if([detailText length]) {
         
-        CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2) - cell.imageView.image.size.width, 20000.0f);
+        CGSize constraint = CGSizeMake(self.view.bounds.size.width - (CELL_CONTENT_MARGIN * 2), 20000.0f);
         
         NSAttributedString *attributedText =
         [[NSAttributedString alloc] initWithString:detailText
@@ -181,13 +180,13 @@
                                                    context:nil];
         CGSize size = rect.size;
         
-        CGFloat height = MAX(size.height + cell.imageView.image.size.height, 40.0f);
+        CGFloat height = MAX(size.height, 40.0f);
         
         return height + (CELL_CONTENT_MARGIN * 2);
     }
     else {
         
-        return MAX(cell.imageView.image.size.height, 40.0f);
+        return 40.0f;
     }
 }
 

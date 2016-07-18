@@ -61,11 +61,18 @@
             
             for (NSDictionary *data in dataArray) {
                 
-                DetailsInfo *detailsInfoData = [NSEntityDescription insertNewObjectForEntityForName:@"DetailsInfo" inManagedObjectContext:[coreDataManager managedObjectContext]];
-                
-                detailsInfoData.title = [self validateValueForObject:[data objectForKey:@"title"]];
-                detailsInfoData.detailDescription = [self validateValueForObject:[data objectForKey:@"description"]];
-                detailsInfoData.imageRef = [self validateValueForObject:[data objectForKey:@"imageHref"]];
+                if([data objectForKey:@"title"] == [NSNull null] && [data objectForKey:@"description"] == [NSNull null] && [data objectForKey:@"imageHref"] == [NSNull null]) {
+                    
+                    //Do nothing
+                }
+                else {
+                    
+                    DetailsInfo *detailsInfoData = [NSEntityDescription insertNewObjectForEntityForName:@"DetailsInfo" inManagedObjectContext:[coreDataManager managedObjectContext]];
+                    
+                    detailsInfoData.title = [self validateValueForObject:[data objectForKey:@"title"]];
+                    detailsInfoData.detailDescription = [self validateValueForObject:[data objectForKey:@"description"]];
+                    detailsInfoData.imageRef = [self validateValueForObject:[data objectForKey:@"imageHref"]];
+                }
             }
             
             result = [[coreDataManager managedObjectContext]save:nil];
