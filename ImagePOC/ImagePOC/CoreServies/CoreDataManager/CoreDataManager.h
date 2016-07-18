@@ -32,4 +32,6 @@
 
 - (BOOL)isDataAvailableForEntity:(NSString*)entityName;
 
+- (BOOL)deleteDataForEntity: (NSString *)entityName;
+
 @end

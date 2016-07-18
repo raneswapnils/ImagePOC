@@ -19,8 +19,9 @@
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) UITableView *detailsTableView;
-
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) UINavigationItem *navigationItem;
+@property (nonatomic, strong) UIRefreshControl *tabelViewRefreshControl;
 
 @end
 
@@ -31,16 +32,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    RequestResponseParser *requestResponseParser = [[RequestResponseParser alloc]init];
+    [self initializeTableView];
     
-    [requestResponseParser callApiRequest:^(BOOL status, NSError *error) {
-        
-        if(status) {
-            [self fetchResult];
-            [self initializeTableView];
-            [self initializeNavigationBar];
-        }
-    }];
+    [self initializeNavigationBar];
+    
+    self.tabelViewRefreshControl = [[UIRefreshControl alloc] init];
+    
+    [self.tabelViewRefreshControl addTarget:self action:@selector(pullToRefreshData:) forControlEvents:UIControlEventValueChanged];
+    
+    [self.detailsTableView addSubview:self.tabelViewRefreshControl];
+    
+    [self loadDataFromWebService];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -67,9 +69,22 @@
     
     UINavigationBar *navigationBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
     [self.view addSubview:navigationBar];
-    NSString *title = [[NSUserDefaults standardUserDefaults]stringForKey:@"title"];
-    UINavigationItem *navigationItem = [[UINavigationItem alloc]initWithTitle:title];
-    navigationBar.items = @[navigationItem];
+    self.navigationItem = [[UINavigationItem alloc]init];
+    navigationBar.items = @[self.navigationItem];
+}
+
+-(void)loadDataFromWebService {
+    
+    RequestResponseParser *requestResponseParser = [[RequestResponseParser alloc]init];
+    
+    [requestResponseParser callApiRequest:^(BOOL status, NSError *error) {
+        
+        if(status) {
+            [self fetchResult];
+            NSString *title = [[NSUserDefaults standardUserDefaults]stringForKey:@"title"];
+            self.navigationItem.title = title;
+        }
+    }];
 }
 
 /*! This method will fetch cached data */
@@ -96,6 +111,15 @@
         NSLog(@"Unable to perform fetch.");
         NSLog(@"%@, %@", error, error.localizedDescription);
     }
+}
+
+#pragma mark- pull to refresh functionality
+
+- (void) pullToRefreshData:(id) sender {
+    
+    [[CoreDataManager sharedInstance]deleteDataForEntity:@"DetailsInfo"];
+    [self loadDataFromWebService];
+    [self.tabelViewRefreshControl endRefreshing];
 }
 
 #pragma mark - UITableViewDataSource Methods

@@ -140,4 +140,55 @@
     }
 }
 
+
+- (BOOL)deleteDataForEntity: (NSString *)entityName {
+    
+    @try {
+        
+        NSError *error = nil;
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
+        
+        NSEntityDescription *entity =[NSEntityDescription entityForName:entityName inManagedObjectContext:self.managedObjectContext];
+        
+        [fetchRequest setEntity:entity];
+        
+        NSArray *mutableFetchResults =[self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+        
+        if (!mutableFetchResults || [mutableFetchResults count] == 0) {
+            // Handle the error.
+            // This is a serious error and should advise the user to restart the application
+            return NO;
+            
+        } else {
+            
+            for (NSManagedObject *entityData in mutableFetchResults) {
+                
+                [self.managedObjectContext deleteObject:entityData];
+            }
+        }
+        
+        [self.managedObjectContext save:&error];
+        
+        if (error) {
+            
+            return NO;
+        }
+        
+        return YES;
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"NSException caught");
+        NSLog(@"Name: %@", exception.name);
+        NSLog(@"Reason: %@", exception.reason);
+        return NO;
+    }
+    @finally
+    {
+        NSLog(@"Deleted data");
+    }
+    
+}
+
 @end
